@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
 import { getLyrics, getTrackData } from '../../services/lyrics-fetcher';
@@ -21,7 +21,7 @@ class Lyrics extends Component {
     const { track, lyrics } = this.state;
 
     return (
-      <React.Fragment>
+      <Fragment>
         <Link to="/" className="btn btn-dark btn-sm mb-4">Go Back</Link>
         <h5 className="card-header">
           {track.track_name} by <span className="text-secondary">{track.artist_name}</span>
@@ -29,7 +29,7 @@ class Lyrics extends Component {
         <div className="card-body">
           <p className="card-text">{lyrics.lyrics_body}</p>
         </div>
-      </React.Fragment>
+      </Fragment>
     )
   }
 }

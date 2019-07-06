@@ -27,8 +27,18 @@ const getTrackData = async (id) => {
   return message.body.track;
 };
 
+const getTopTen = async () => {
+  const API_DATA = await fetch(
+    `${BASE_URL}/chart.tracks.get?chart_name=top&page=1&page_size=10&country=srb&f_has_lyrics=1&apikey=${API_KEY}`
+  );
+
+  const { message } = await API_DATA.json();
+  return message.body.track_list;
+};
+
 export {
   findTracks,
   getLyrics,
   getTrackData,
+  getTopTen,
 };
