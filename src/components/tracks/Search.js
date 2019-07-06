@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Consumer } from '../../context';
 
-const API_KEY = '68f3901d4703c898fca4bfa8037d6ea0';
+import { Consumer } from '../../context';
+import { findTracks } from '../../services/lyrics-fetcher';
 
 class Search extends Component {
   state = {
@@ -15,9 +15,7 @@ class Search extends Component {
   findTrack = async (dispatch, e) => {
     e.preventDefault();
 
-    const API_DATA = await fetch(
-      `https://cors-anywhere.herokuapp.com/https://api.musixmatch.com/ws/1.1/track.search?q_track=${this.state.trackTitle}&page_size=10&page=1&s_track_rating=desc&apikey=${API_KEY}`);
-    const data = await API_DATA.json();
+    const data = await findTracks(this.state.trackTitle);
 
     dispatch({
       type: "SEARCH_TRACKS",

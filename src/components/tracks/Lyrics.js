@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-const API_KEY = '68f3901d4703c898fca4bfa8037d6ea0';
+import { getLyrics, getTrackData } from '../../services/lyrics-fetcher';
 
 class Lyrics extends Component {
   state = {
@@ -10,18 +10,11 @@ class Lyrics extends Component {
   }
 
   async componentDidMount() {
-    const API_DATA = await fetch(
-      `https://cors-anywhere.herokuapp.com/https://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=${this.props.match.params.id}&apikey=${API_KEY}`);
-    const data = await API_DATA.json();
+    const lyricId = this.props.match.params.id;
+    const lyrics = await getLyrics(lyricId);
+    const track = await getTrackData(lyricId);
 
-    const API_DATA_TRACK = await fetch(
-      `https://cors-anywhere.herokuapp.com/https://api.musixmatch.com/ws/1.1/track.get?track_id=${this.props.match.params.id}&apikey=${API_KEY}`);
-    const data_track = await API_DATA_TRACK.json();
-
-    this.setState({
-      lyrics: data.message.body.lyrics,
-      track: data_track.message.body.track
-    })
+    this.setState({ lyrics, track });
   }
 
   render() {
